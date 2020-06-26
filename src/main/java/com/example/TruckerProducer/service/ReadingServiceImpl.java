@@ -59,7 +59,7 @@ public class ReadingServiceImpl implements ReadingService{
                 alerts.setDescription("Low Fuel");
                 String message = objectMapper.writeValueAsString(alerts);
                 vehicleAlertsSns.send("Low Fuel Alert",message);
-                //alertsRepository.save(alerts);
+                alertsRepository.save(alerts);
 //                restTemplate.postForObject("http://localhost:8081/api/alerts",alerts,Alerts.class);
             }
             if(reading.getEngineRpm() > vehicle.get().getRedlineRpm()){
@@ -71,7 +71,7 @@ public class ReadingServiceImpl implements ReadingService{
                 System.out.println(message);
                 vehicleAlertsSns.send("High RPM Alert",message);
 //                restTemplate.postForObject("http://localhost:8081/api/alerts",alerts,Alerts.class);
-                //alertsRepository.save(alerts);
+                alertsRepository.save(alerts);
             }
             if( (reading.getTires().getFrontLeft() < 32 )||(reading.getTires().getFrontLeft() > 36 )||
                     (reading.getTires().getFrontRight() < 32 )||(reading.getTires().getFrontRight() > 36 )||
@@ -85,7 +85,7 @@ public class ReadingServiceImpl implements ReadingService{
                 String message = objectMapper.writeValueAsString(alerts);
                 vehicleAlertsSns.send("Low/High tire pressure Alert",message);
 //                restTemplate.postForObject("http://localhost:8081/api/alerts",alerts,Alerts.class);
-                //alertsRepository.save(alerts);
+                alertsRepository.save(alerts);
             }
             if(reading.isEngineCoolantLow() || reading.isCheckEngineLightOn()){
                 Alerts alerts = new Alerts();
@@ -95,7 +95,7 @@ public class ReadingServiceImpl implements ReadingService{
                 String message = objectMapper.writeValueAsString(alerts);
                 vehicleAlertsSns.send("Engine Coolant low or Check light On Alert",message);
 //                restTemplate.postForObject("http://localhost:8081/api/alerts",alerts,Alerts.class);
-                //alertsRepository.save(alerts);
+                alertsRepository.save(alerts);
             }
         }
         //return readingRepository.save(reading);
